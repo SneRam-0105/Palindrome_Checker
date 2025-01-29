@@ -1,14 +1,19 @@
 import { useState } from "react";
-import { TextField, Card, CardContent, Typography } from "@mui/material";
+import { TextField, Card, CardContent, Typography, Button } from "@mui/material";
 
 
 export default function PalindromeChecker() {
     const [text, setText] = useState("");
     const [isPalindrome, setIsPalindrome] = useState < boolean | null > (null);
+    const[result, setResult] = useState < boolean  > (false);
 
     const checkPalindrome = (input: string) => {
+        if (!input) {
+            return;
+        }
         const inputWord = input.toLowerCase().replace(/[^a-z0-9]/g, "");
         setIsPalindrome(inputWord === inputWord.split('').reverse().join(''));
+        setResult(true);
     };
 
     return (
@@ -24,18 +29,30 @@ export default function PalindromeChecker() {
               value={text}
               onChange={(e) => {
                 setText(e.target.value);
-                checkPalindrome(e.target.value);
+                setResult(false);
+                // checkPalindrome(e.target.value);
               }}
               style={{ marginBottom: "20px" }}
             />
-            {text && (
+               <Button onClick={() => checkPalindrome(text)}>Check</Button> 
+
+               
+            {result && (
               <Typography variant="h5" color={isPalindrome ? "green" : "red"}>
                 {isPalindrome ? "✅ It's a palindrome!" : "❌ Not a palindrome!"}
               </Typography>
             )}
-              {/* <Button onClick={() => checkPalindrome(text)}>Check</Button> */}
+           
 
-
+              <Card style={{ padding: "40px", maxWidth: "400px", textAlign: "center" }}> 
+                <CardContent>
+                    <Typography variant="h6" color="black"gutterBottom> Funny Note!! </Typography>
+                    <Typography variant="h6" fontSize="1rem"color="darkblue"gutterBottom>
+                    The Finnish word for “soapstone vendor” is supposedly the longest palindrome in everyday use: saippuakivikauppias. (What do you mean you don’t have a trusted soapstone vendor?)
+                    </Typography>
+                    </CardContent>
+                    </Card>
+            <Typography marginTop={"10px"}>Copyright © Sneha Ramalingam 2025</Typography>
             
           </CardContent>
         </Card>
